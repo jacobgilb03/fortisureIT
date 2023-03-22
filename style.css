@@ -1,0 +1,22 @@
+.card {
+    background-image: url('card-back.png');
+}
+
+.card.flipped {
+    background-image: url('card-front.png');
+    transform: rotateY(180deg);
+}
+
+.card {
+    width: 150px;
+    height: 150px;
+    background-color: #f2f2f2;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.3 ease-in-out;
+}
