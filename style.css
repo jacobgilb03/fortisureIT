@@ -94,7 +94,7 @@ button {
 }
 
 .card.flipped .card-front {
-    transform: rotateY(180deg) rotateZ(50deg);
+    transform: rotateY(180deg);
 }
 
 .card.flipped .card-back {
@@ -109,7 +109,7 @@ button {
     height: 100%;
     text-align: center;
     background: #f1c40f;
-    transform: rotateY(180deg) rotateZ(50deg);
+    transform: rotateY(180deg);
 }
 
 .win-text {

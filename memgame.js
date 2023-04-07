@@ -74,40 +74,56 @@ const flipBackCards = () => {
 };
 
 const flipCard = cardEl => {
-    gameState.flippedCards++;
-    gameState.totalFlips++;
+  gameState.flippedCards++;
+  gameState.totalFlips++;
 
-    if (!gameState.gameStarted) {
-      startGame();
-    }
+  if (!gameState.gameStarted) {
+    startGame();
+  }
 
-    if (gameState.flippedCards <= 2) {
-      cardEl.classList.add('flipped');
-    }
+  if (gameState.flippedCards <= 2) {
+    cardEl.classList.add('flipped');
+  }
 
-    if (gameState.flippedCards === 2) {
-      const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
-      console.log('flippedCards:', flippedCards);
-      if (flippedCards.length === 2 && flippedCards[0].querySelector('.card-back').innerText === flippedCards[1].querySelector('.card-back').innerText) {
+  if (gameState.flippedCards === 2) {
+    const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
+
+    if (flippedCards.length === 2 && flippedCards[0].querySelector('.card-back').innerText.trim() === flippedCards[1].querySelector('.card-back').innerText.trim()) {
+      flippedCards.forEach(card => {
+        card.classList.add('matched');
+        // card.classList.remove('flipped');
+      });
+
+      gameState.matches++;
+      if (gameState.matches === gameState.totalMatches) {
+        endGame();
+      }
+    } else {
+      setTimeout(() => {
         flippedCards.forEach(card => {
-          card.classList.add('matched');
           card.classList.remove('flipped');
         });
-
-        gameState.matches++;
-        if (gameState.matches === gameState.totalMatches) {
-          endGame();
-        }
-      } else {
-        setTimeout(() => {
-          flippedCards.forEach(card => {
-            card.classList.remove('flipped');
-          });
-        }, 1000);
-      }
-      gameState.flippedCards = 0;
+      }, 1000);
     }
+    gameState.flippedCards = 0;
+  }
+
+  if (!document.querySelectorAll('.card:not(.flipped)').length) {
+    setTimeout(() => {
+      boardContainerEl.classList.add('flipped');
+      winEl.innerHTML = `
+        <span class="win-text">
+          You won!<br />
+          with <span class="highlight">${gameState.totalFlips}</span> moves<br />
+          under <span class="highlight">${gameState.totalTime}</span> seconds
+        </span>
+      `
+
+      clearInterval(gameState.loop)
+    }, 1000);
+  }
 };
+
   
 
 
