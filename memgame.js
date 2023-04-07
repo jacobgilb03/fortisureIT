@@ -11,6 +11,7 @@ const gameState = {
   totalFlips: 0,
   totalTime: 0,
   loop: null,
+  playerName: null,
 };
 
 const shuffle = array => {
@@ -64,6 +65,9 @@ const startGame = () => {
     movesEl.innerText = `${gameState.totalFlips} moves`;
     timerEl.innerText = `time: ${gameState.totalTime} sec`;
   }, 1000);
+
+  // Prompt user for their name and store it in gameState
+  gameState.playerName = prompt('Please enter your name:');
 };
 
 const flipBackCards = () => {
@@ -113,7 +117,7 @@ const flipCard = cardEl => {
       boardContainerEl.classList.add('flipped');
       winEl.innerHTML = `
         <span class="win-text">
-          You won!<br />
+          You won, ${gameState.playerName}!<br />
           with <span class="highlight">${gameState.totalFlips}</span> moves<br />
           under <span class="highlight">${gameState.totalTime}</span> seconds
         </span>
