@@ -1,9 +1,9 @@
-const boardContainerEl = document.querySelector('.board-container');
-const boardEl = document.querySelector('.board');
-const movesEl = document.querySelector('.moves');
-const timerEl = document.querySelector('.timer');
-const startBtnEl = document.querySelector('button');
-const winEl = document.querySelector('.win');
+const boardContainer = document.querySelector('.board-container');
+const gameBoard = document.querySelector('.board');
+const movesTracker = document.querySelector('.moves');
+const timeCount = document.querySelector('.timer');
+const startBtn = document.querySelector('button');
+const gameWin = document.querySelector('.win');
 
 const gameState = {
   gameStarted: false,
@@ -34,7 +34,7 @@ const pickRandom = (array, num) => {
 };
 
 const generateGame = () => {
-  const boardDimension = boardEl.getAttribute('data-dimension');
+  const boardDimension = gameBoard.getAttribute('data-dimension');
   if (boardDimension % 2 !== 0) {
     throw new Error("The dimension of the board must be an even number.")
   }
@@ -53,17 +53,17 @@ const generateGame = () => {
     cardEl.appendChild(cardBackEl);
     return cardEl;
   });
-  boardEl.innerHTML = '';
-  cardElements.forEach(cardEl => boardEl.appendChild(cardEl));
+  gameBoard.innerHTML = '';
+  cardElements.forEach(cardEl => gameBoard.appendChild(cardEl));
 };
 
 const startGame = () => {
   gameState.gameStarted = true;
-  startBtnEl.classList.add('disabled');
+  startBtn.classList.add('disabled');
   gameState.loop = setInterval(() => {
     gameState.totalTime++;
-    movesEl.innerText = `${gameState.totalFlips} moves`;
-    timerEl.innerText = `time: ${gameState.totalTime} sec`;
+    movesTracker.innerText = `${gameState.totalFlips} moves`;
+    timeCount.innerText = `Time: ${gameState.totalTime} sec`;
   }, 1000);
 
   // Prompt user for their name and store it in gameState
@@ -114,8 +114,8 @@ const flipCard = cardEl => {
 
   if (!document.querySelectorAll('.card:not(.flipped)').length) {
     setTimeout(() => {
-      boardContainerEl.classList.add('flipped');
-      winEl.innerHTML = `
+      boardContainer.classList.add('flipped');
+      gameWin.innerHTML = `
         <span class="win-text">
           You won, ${gameState.playerName}!<br />
           with <span class="highlight">${gameState.totalFlips}</span> moves<br />
